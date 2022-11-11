@@ -1,1 +1,1 @@
-![alt text](./logo.png "Logo")
+![Logo](logo.png)
