@@ -1,30 +1,18 @@
-import 'tailwindcss/tailwind.css'
+import { SessionProvider } from "next-auth/react"
+import "./styles.css"
 
-import type { AppProps } from 'next/app'
-import Head from 'next/head'
-import Header from '../components/header'
-import { Auth0Provider } from '@auth0/auth0-react'
+import type { AppProps } from "next/app"
+import type { Session } from "next-auth"
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+// Use of the <SessionProvider> is mandatory to allow components that call
+// `useSession()` anywhere in your application to access the `session` object.
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps<{ session: Session }>) {
   return (
-    <Auth0Provider
-      clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID}
-      domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN}
-    >
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="description"
-          content="Clone and deploy your own Next.js portfolio in minutes."
-        />
-        <title>My awesome blog</title>
-      </Head>
-
-      <Header />
-
-      <main className="py-14">
-        <Component {...pageProps} />
-      </main>
-    </Auth0Provider>
+    <SessionProvider session={session}>
+      <Component {...pageProps} />
+    </SessionProvider>
   )
 }
