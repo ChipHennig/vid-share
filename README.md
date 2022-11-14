@@ -1,3 +1,5 @@
+![Title picture](title.png)
+
 # Roadmap Voting App
 
 ![](https://github.com/upstash/roadmap/blob/main/ss.png)
