@@ -1,28 +1,37 @@
-import Link from "next/link"
-import styles from "./footer.module.css"
-import packageJSON from "../package.json"
+import { useTheme } from 'next-themes'
 
 export default function Footer() {
+  const { theme, themes, setTheme } = useTheme()
+
   return (
-    <footer className={styles.footer}>
-      <hr />
-      <ul className={styles.navItems}>
-        <li className={styles.navItem}>
-          <a href="https://next-auth.js.org">Documentation</a>
-        </li>
-        <li className={styles.navItem}>
-          <a href="https://www.npmjs.com/package/next-auth">NPM</a>
-        </li>
-        <li className={styles.navItem}>
-          <a href="https://github.com/nextauthjs/next-auth-example">GitHub</a>
-        </li>
-        <li className={styles.navItem}>
-          <Link href="/policy">Policy</Link>
-        </li>
-        <li className={styles.navItem}>
-          <em>next-auth@{packageJSON.dependencies["next-auth"]}</em>
-        </li>
-      </ul>
+    <footer
+      className="text-center py-10 border-t border-t-zinc-200 mt-20
+    dark:border-t-zinc-700"
+    >
+      <p>
+        <a
+          href="https://github.com/upstash/roadmap"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-dimmed"
+        >
+          Create your own Roadmap Voting App with Upstash and Redis.
+        </a>
+      </p>
+
+      <div className="mt-6">
+        <select
+          className="form-select py-2 text-sm capitalize leading-none"
+          value={theme}
+          onChange={(e) => setTheme(e.target.value)}
+        >
+          {themes.map((theme: string) => (
+            <option key={theme} value={theme}>
+              {theme}
+            </option>
+          ))}
+        </select>
+      </div>
     </footer>
   )
 }

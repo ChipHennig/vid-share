@@ -1,115 +1,67 @@
-![Logo](vidsa.png)
+# Roadmap Voting App
 
-> The example repository is maintained from a [monorepo](https://github.com/nextauthjs/next-auth/tree/main/apps/example-nextjs). Pull Requests should be opened against [`nextauthjs/next-auth`](https://github.com/nextauthjs/next-auth).
+![](https://github.com/upstash/roadmap/blob/main/ss.png)
 
-<p align="center">
-   <br/>
-   <a href="https://next-auth.js.org" target="_blank"><img width="150px" src="https://next-auth.js.org/img/logo/logo-sm.png" /></a>
-   <h3 align="center">NextAuth.js Example App</h3>
-   <p align="center">
-   Open Source. Full Stack. Own Your Data.
-   </p>
-   <p align="center" style="align: center;">
-      <a href="https://npm.im/next-auth">
-        <img alt="npm" src="https://img.shields.io/npm/v/next-auth?color=green&label=next-auth">
-      </a>
-      <a href="https://bundlephobia.com/result?p=next-auth-example">
-        <img src="https://img.shields.io/bundlephobia/minzip/next-auth?label=next-auth" alt="Bundle Size"/>
-      </a>
-      <a href="https://www.npmtrends.com/next-auth">
-        <img src="https://img.shields.io/npm/dm/next-auth?label=next-auth%20downloads" alt="Downloads" />
-      </a>
-      <a href="https://npm.im/next-auth">
-        <img src="https://img.shields.io/badge/npm-TypeScript-blue" alt="TypeScript" />
-      </a>
-   </p>
-</p>
+You can deploy Roadmap application yourself and ask your users to vote for your roadmap features. See the [live example](https://roadmap.upstash.com).
 
-## Overview
+In this version, the user should sign up (via Auth0) to add a new feature and vote them up. Also you can configure yourself as admin, to set a feature request as `release` also delete any feature request.
 
-NextAuth.js is a complete open source authentication solution.
+If you prefer the one without authentication, see the [old version](https://github.com/vercel/next.js/tree/canary/examples/with-redis).
 
-This is an example application that shows how `next-auth` is applied to a basic Next.js app.
+## Docs
 
-The deployed version can be found at [`next-auth-example.vercel.app`](https://next-auth-example.vercel.app)
+- [Set up](#set-up)
+- [Configuring Upstash](#configuring-upstash)
+- [Configuring Auth0](#configuring-auth0)
+- [Deploy on Vercel](#deploy-your-local-project)
 
-### About NextAuth.js
+## Set up
 
-NextAuth.js is an easy to implement, full-stack (client/server) open source authentication library originally designed for [Next.js](https://nextjs.org) and [Serverless](https://vercel.com). Our goal is to [support even more frameworks](https://github.com/nextauthjs/next-auth/issues/2294) in the future.
+First clone the repo. Copy the `.env.local.example` file to `.env.local` (which will be ignored by Git):
 
-Go to [next-auth.js.org](https://next-auth.js.org) for more information and documentation.
-
-> *NextAuth.js is not officially associated with Vercel or Next.js.*
-
-## Getting Started
-
-### 1. Clone the repository and install dependencies
-
-```
-git clone https://github.com/nextauthjs/next-auth-example.git
-cd next-auth-example
-npm install
-```
-
-### 2. Configure your local environment
-
-Copy the .env.local.example file in this directory to .env.local (which will be ignored by Git):
-
-```
+```bash
 cp .env.local.example .env.local
 ```
 
-Add details for one or more providers (e.g. Google, Twitter, GitHub, Email, etc).
+## Configuring Upstash
 
-#### Database
+1. Go to the [Upstash Console](https://console.upstash.com/) and create a new database
 
-A database is needed to persist user accounts and to support email sign in. However, you can still use NextAuth.js for authentication without a database by using OAuth for authentication. If you do not specify a database, [JSON Web Tokens](https://jwt.io/introduction) will be enabled by default.
+#### Upstash environment
 
-You **can** skip configuring a database and come back to it later if you want.
+`UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` find the variables in the database details page in Upstash Console.
 
-For more information about setting up a database, please check out the following links:
+## Configuring Auth0
 
-* Docs: [next-auth.js.org/adapters/overview](https://next-auth.js.org/adapters/overview)
+1. Go to the [Auth0 dashboard](https://manage.auth0.com/) and create a new application of type **Single Page Web Applications**
+2. Go to the settings page of the application
+3. Configure the following settings:
+   - **Allowed Callback URLs**: Should be set to `http://localhost:3000/` when testing locally or typically to `https://myapp.com/` when deploying your application.
+   - **Allowed Logout URLs**: Should be set to `http://localhost:3000/` when testing locally or typically to `https://myapp.com/` when deploying your application.
+4. Save the settings.
 
-### 3. Configure Authentication Providers
+#### Auth0 environment
 
-1. Review and update options in `pages/api/auth/[...nextauth].js` as needed.
+Go to your **Application -> Settings** page. You will see **Basic Information** section on top of the page.
+ 
+- `NEXT_PUBLIC_AUTH0_DOMAIN`: Can be found in **Basic Information --> Domain**.
+- `NEXT_PUBLIC_AUTH0_CLIENT_ID`: Can be found in **Basic Information --> Client ID**.
+- `NEXT_PUBLIC_AUTH0_ADMIN_ID`: This is the **user_id** of the admin user. First run your application and sign-in yourself. Then find your **user_id** in the Auth0 console, **"User Management > Users"** page.
 
-2. When setting up OAuth, in the developer admin page for each of your OAuth services, you should configure the callback URL to use a callback path of `{server}/api/auth/callback/{provider}`.
+## Replace Your Logo
 
-  e.g. For Google OAuth you would use: `http://localhost:3000/api/auth/callback/google`
+Copy your logo image to `public` folder. Then edit `components/Header.tsx`.
 
-  A list of configured providers and their callback URLs is available from the endpoint `/api/auth/providers`. You can find more information at https://next-auth.js.org/configuration/providers/oauth
+## Run Your Project
 
-3. You can also choose to specify an SMTP server for passwordless sign in via email.
+In the project folder, run:
+`npm install`
+`next dev`
 
-### 4. Start the application
+## Deploy Your Project
 
-To run your site locally, use:
+To deploy your project to Vercel, run `vercel` in the project folder.
 
-```
-npm run dev
-```
+Or you can push it to GitHub/GitLab/Bitbucket and [import to Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=upstash-roadmap).
 
-To run it in production mode, use:
-
-```
-npm run build
-npm run start
-```
-
-### 5. Preparing for Production
-
-Follow the [Deployment documentation](https://next-auth.js.org/deployment)
-
-## Acknowledgements
-
-<a href="https://vercel.com?utm_source=nextauthjs&utm_campaign=oss">
-<img width="170px" src="https://raw.githubusercontent.com/nextauthjs/next-auth/canary/www/static/img/powered-by-vercel.svg" alt="Powered By Vercel" />
-</a>
-<p align="left">Thanks to Vercel sponsoring this project by allowing it to be deployed for free for the entire NextAuth.js Team</p>
-
-## License
-
-ISC
-
+**Important**: When you import your project on Vercel, make sure to click on **Environment Variables** and set them to match your `.env.local` file.
