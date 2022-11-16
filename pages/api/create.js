@@ -1,5 +1,5 @@
 import { url } from 'yup'
-import redis, { databaseName } from 'lib/redis'
+import redis, { databaseName } from '../../lib/redis'
 import authenticate from 'lib/authenticate'
 
 export default authenticate(async (req, res) => {

@@ -1,4 +1,4 @@
-import redis, { databaseName } from 'lib/redis'
+import redis, { databaseName } from '../../lib/redis'
 
 export default async (req, res) => {
     try {
