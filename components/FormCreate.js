@@ -18,7 +18,7 @@ export default function FormCreate({ onSubmitNewVideo, inputNewVideo }) {
         className="form-input"
         type="text"
         ref={inputNewVideo}
-        placeholder="Enter a new feature request?"
+        placeholder="Enter a video embed url"
       />
       {/*isAuthenticated && (
         <button className="button" type="button" onClick={() => logout()}>

@@ -1,14 +1,13 @@
-import redis, { databaseName } from '../../lib/redis'
+import redis from '../../lib/redis'
 
 export default async (req, res) => {
     try {
-        const { email } = req.body
+        const email = req.body
 
-        const data = await redis.hscan(databaseName, "videos", 0, "match " + email + ":*")
-
+        const data = await redis.hscan("videos", 0, ["match " + email + ":*"])
         let result = []
-        for (let i = 0; i < data.length - 1; i += 2) {
-            let link = data[i]
+        for (let i = 1; i < data.length; i += 2) {
+            let link = data[i][1]
             //   item['createdAt'] = data[i + 1]
             result.push(link)
         }
