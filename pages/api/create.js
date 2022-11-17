@@ -18,7 +18,7 @@ export default authenticate(async (req, res) => {
 
         await redis.hset(
             "videos",
-            { [email + ":" + Date.now()]: link }
+            { [nickname + ":" + Date.now()]: link }
         )
 
         res.json({ body: 'success' })

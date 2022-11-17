@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import { SWRConfig } from 'swr'
 import { Auth0Provider } from '@auth0/auth0-react'
 import { ThemeProvider } from 'next-themes'
+import Header from '../components/Header'
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps }) {
               fetch(resource, init).then((res) => res.json())
           }}
         >
+          <Header />
           <Component {...pageProps} />
         </SWRConfig>
       </Auth0Provider>

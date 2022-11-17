@@ -2,9 +2,9 @@ import redis from '../../lib/redis'
 
 export default async (req, res) => {
     try {
-        const email = req.body
+        const username = req.body
 
-        const data = await redis.hscan("videos", 0, ["match " + email + ":*"])
+        const data = await redis.hscan("videos", 0, ["match " + username + ":*"])
         let result = []
         for (let i = 1; i < data.length; i += 2) {
             let link = data[i][1]
