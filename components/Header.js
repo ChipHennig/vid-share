@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
 
@@ -13,6 +14,7 @@ export default function Header() {
     return (
         <form className="flex items-center space-x-4"
             onSubmit={handleSubmit}>
+            <Link href="/">Home</Link>
             <input
                 className="form-input"
                 type="text"
