@@ -6,8 +6,8 @@ export default async (req, res) => {
 
         const data = await redis.hscan("videos", 0, ["match " + username + ":*"])
         let result = []
-        for (let i = 1; i < data.length; i += 2) {
-            let link = data[i][1]
+        for (let i = 1; i < data[1].length; i += 2) {
+            let link = data[1][i]
             //   item['createdAt'] = data[i + 1]
             result.push(link)
         }
