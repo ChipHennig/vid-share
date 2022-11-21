@@ -1,4 +1,4 @@
-![Vid-share](vid-share.png)
+![Vid-share](public/vid-share.png)
 
 Made with :heart: from my parents' basement.
 

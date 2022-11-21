@@ -14,7 +14,9 @@ export default function Header() {
     return (
         <form className="flex items-center space-x-4"
             onSubmit={handleSubmit}>
-            <Link href="/">Home</Link>
+            <Link href="/">
+                <img src="vid-share.png" alt="Home"></img>
+            </Link>
             <input
                 className="form-input"
                 type="text"
