@@ -1,11 +1,11 @@
 import authenticate from "../../lib/authenticate"
-import { addViewer, addViewing } from "../../lib/redis"
+import { addViewer, addViewing, isViewing, removeViewer, removeViewing } from "../../lib/redis"
 
 export default authenticate(async (req, res) => {
     try {
-        const { pid, vid, isAdd } = req.body
-
-        if (isAdd) {
+        const { pid, vid } = req.body
+        const isRemove = isViewing(pid, vid)
+        if (!isRemove) {
             await addViewer(pid, vid)
             await addViewing(vid, pid)
         } else {
@@ -13,7 +13,7 @@ export default authenticate(async (req, res) => {
             await removeViewing(vid, pid)
         }
 
-        res.json({ pid, vid })
+        res.json(!isRemove)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
