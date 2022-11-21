@@ -42,7 +42,7 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
-          alert(data.error)
+          toast.error(data.error)
         } else {
           inputNewVideo.current.value = ''
         }
