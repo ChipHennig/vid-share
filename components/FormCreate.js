@@ -20,11 +20,11 @@ export default function FormCreate({ onSubmitNewVideo, inputNewVideo }) {
         ref={inputNewVideo}
         placeholder="Enter a video embed url"
       />
-      {/*isAuthenticated && (
+      {isAuthenticated && (
         <button className="button" type="button" onClick={() => logout()}>
           Logout
         </button>
-      )*/}
+      )}
     </form>
   ) : (
     <div
