@@ -1,5 +1,5 @@
 import { string } from 'yup'
-import redis from '../../lib/redis'
+import { createVideo } from '../../lib/redis'
 import authenticate from '../../lib/authenticate'
 
 export default authenticate(async (req, res) => {
@@ -15,14 +15,12 @@ export default authenticate(async (req, res) => {
 
         const { nickname, email, updated_at, ...user } = req.user
 
-
-        await redis.hset(
-            "videos",
-            { [nickname + ":" + Date.now()]: link }
-        )
-
-        res.json({ body: 'success' })
-
+        const id = await createVideo({
+            url: link,
+            poster_id: nickname,
+            postedAt: Date.now()
+        })
+        res.json({ id })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

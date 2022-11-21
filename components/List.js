@@ -1,5 +1,4 @@
 export default function List({
-    dataLoading,
     data = [],
 }) {
     return (
@@ -10,7 +9,7 @@ export default function List({
                         <iframe
                             width="560"
                             height="315"
-                            src={item}
+                            src={item.url}
                             title="YouTube video player"
                             frameBorder="0"
                             allow="accelerometer; autoplay; 

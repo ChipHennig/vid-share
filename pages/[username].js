@@ -1,20 +1,23 @@
-import { useRouter } from "next/router";
-import useSWR from "swr"
 import List from "../components/List"
+import { searchVideos } from "../lib/redis"
 
-
-export default function UserPage() {
-    const router = useRouter()
-    const { username } = router.query
-
-    const { data, isValidating, mutate } = useSWR('api/list', { body: username })
+export default function UserPage({ data }) {
 
     return (
         <>
             <List
                 data={data}
-                dataLoading={isValidating}
             />
         </>
     )
+}
+
+export async function getServerSideProps(context) {
+    const username = context.params.username
+    const videos = await searchVideos(username)
+    let data = JSON.parse(JSON.stringify(videos))
+
+    return {
+        props: { data }
+    }
 }
