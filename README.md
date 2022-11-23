@@ -2,7 +2,7 @@
 
 Made with :heart: from my parents' basement.
 
-MVP inspired by: https://github.com/upstash/roadmap and https://fireship.io/lessons/redis-nextjs/
+MVP inspired by: https://github.com/upstash/roadmap
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
