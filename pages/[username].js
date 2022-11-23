@@ -1,12 +1,17 @@
 import redis from "../lib/redis"
+import { useState, useEffect } from "react"
 import { useUser, getSession } from "@auth0/nextjs-auth0"
 import List from "../components/List"
 import ViewerButton from "../components/ViewerButton"
-import { useState } from "react"
+
 
 export default function UserPage({ isUser, username, isViewer, data }) {
     const { user, error, isLoading } = useUser();
     const [viewerState, setViewer] = useState(isViewer)
+
+    useEffect(() => {
+        setViewer(isViewer)
+    }, [isViewer])
 
     if (isLoading) return null
     if (error) return <div>{error.message}</div>
@@ -37,7 +42,9 @@ export default function UserPage({ isUser, username, isViewer, data }) {
 
     const button = () => {
         if (user && user.nickname !== username) {
-            return <ViewerButton onViewershipChange={onViewershipChange}
+            return <ViewerButton
+                user={user}
+                onViewershipChange={onViewershipChange}
                 isViewer={viewerState} />
         } else {
             return <></>
@@ -76,8 +83,6 @@ export async function getServerSideProps(context) {
     if (session) {
         isViewer = await redis.sismember("viewers:" + username, session.user.nickname)
         isViewer = Boolean(isViewer)
-        // isViewer = isViewing(username, session.user.nickname)
-        // isViewer = JSON.parse(JSON.stringify(isViewer))
     }
 
 

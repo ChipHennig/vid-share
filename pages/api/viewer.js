@@ -14,15 +14,6 @@ export default withApiAuthRequired(async (req, res) => {
             await redis.sadd("viewers:" + pid, vid)
             await redis.sadd("viewing:" + vid, pid)
         }
-        // const isRemove = isViewing(pid, vid)
-        // redis.
-        // if (!isRemove) {
-        //     await addViewer(pid, vid)
-        //     await addViewing(vid, pid)
-        // } else {
-        //     await removeViewer(pid, vid)
-        //     await removeViewing(vid, pid)
-        // }
 
         res.json(!isViewer)
     } catch (error) {

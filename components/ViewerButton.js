@@ -1,15 +1,10 @@
-import { useUser } from "@auth0/nextjs-auth0"
 
-export default function ViewerButton({ onViewershipChange, isViewer }) {
-    const { user, error, isLoading } = useUser();
 
+export default function ViewerButton({ user, onViewershipChange, isViewer }) {
     const onSubmit = (e) => {
         e.preventDefault()
         onViewershipChange()
     }
-
-    if (isLoading) return null
-    if (error) return <div>{error.message}</div>
 
     const viewButtonText = isViewer ? "You're a viewer" : "Become a viewer"
 
