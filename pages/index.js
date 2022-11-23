@@ -1,10 +1,9 @@
-import Link from "next/link";
 import { useRef } from "react"
 import { useUser, getSession } from "@auth0/nextjs-auth0";
 import redis from "../lib/redis";
 import FormCreate from "../components/FormCreate"
 import List from "../components/List"
-
+import { Container } from "@mantine/core";
 
 export default function Home({ data }) {
   const { user, error, isLoading } = useUser();
@@ -37,8 +36,8 @@ export default function Home({ data }) {
   }
 
   return user ? (
-    <>
-      <FormCreate user={user}
+    <Container>
+      <FormCreate
         onSubmitNewVideo={onSubmitNewVideo}
         inputNewVideo={inputNewVideo}
       />
@@ -46,22 +45,11 @@ export default function Home({ data }) {
         data={data}
         isUser={true}
       />
-    </>
+    </Container>
   ) : (
-    <div
-      className="flex flex-col items-center bg-zinc-100 px-3 py-6 rounded
-    dark:bg-zinc-800"
-    >
+    <Container>
       <p>Please login to submit a video</p>
-      <Link href="/api/auth/login">
-        <button
-          className="button mt-4"
-          type="button"
-        >
-          Login
-        </button>
-      </Link>
-    </div>
+    </Container>
   )
 }
 

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { useUser, getSession } from "@auth0/nextjs-auth0"
 import List from "../components/List"
 import ViewerButton from "../components/ViewerButton"
+import { Container } from "@mantine/core"
 
 
 export default function UserPage({ isUser, username, isViewer, data }) {
@@ -52,14 +53,14 @@ export default function UserPage({ isUser, username, isViewer, data }) {
     }
 
     return (
-        <>
+        <Container>
             {button()}
             <div>{username}</div>
             <List
                 isUser={isUser}
                 data={data}
             />
-        </>
+        </Container>
     )
 }
 
