@@ -1,36 +1,17 @@
 import { useRef } from "react"
-import { useAuth0 } from "@auth0/auth0-react"
+import { useUser } from "@auth0/nextjs-auth0";
 import FormCreate from "../components/FormCreate"
 
 
 export default function Home() {
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0()
+  const { user, error, isLoading } = useUser();
   const inputNewVideo = useRef(null)
 
-
-  const getToken = (func) => {
-    return async (props) => {
-      if (!isAuthenticated) {
-        toast.error('Please login')
-        return false
-      }
-
-      const token = await getAccessTokenSilently()
-
-      if (!token) {
-        toast.error('User not found')
-        return false
-      }
-
-      return func(token, props)
-    }
-  }
-
-  const onSubmitNewVideo = getToken(async (token) => {
+  const onSubmitNewVideo = async () => {
     const requestOptions = {
       method: 'POST',
       headers: {
-        authorization: token,
+        // authorization: token,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -42,12 +23,12 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => {
         if (data.error) {
-          toast.error(data.error)
+          alert(data.error)
         } else {
           inputNewVideo.current.value = ''
         }
       })
-  })
+  }
 
   return (
     <>

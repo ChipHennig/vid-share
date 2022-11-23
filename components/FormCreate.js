@@ -1,17 +1,18 @@
-import { useAuth0 } from '@auth0/auth0-react'
+import { useUser } from "@auth0/nextjs-auth0"
+import Link from "next/link";
 
 export default function FormCreate({ onSubmitNewVideo, inputNewVideo }) {
-  const { user, isLoading, isAuthenticated, loginWithRedirect, logout } =
-    useAuth0()
+  const { user, error, isLoading } = useUser();
 
   const onSubmit = (e) => {
     e.preventDefault()
     onSubmitNewVideo()
   }
 
-  if (isLoading) return null
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>{error.message}</div>
 
-  return isAuthenticated ? (
+  return user ? (
     <form className="flex items-center space-x-4" onSubmit={onSubmit}>
       <img src={user.picture} alt={user.name} width={40} className="rounded" />
       <input
@@ -20,10 +21,12 @@ export default function FormCreate({ onSubmitNewVideo, inputNewVideo }) {
         ref={inputNewVideo}
         placeholder="Enter a video embed url"
       />
-      {isAuthenticated && (
-        <button className="button" type="button" onClick={() => logout()}>
-          Logout
-        </button>
+      {user && (
+        <Link href="/api/auth/logout">
+          <button className="button" type="button" >
+            Logout
+          </button>
+        </Link>
       )}
     </form>
   ) : (
@@ -32,13 +35,14 @@ export default function FormCreate({ onSubmitNewVideo, inputNewVideo }) {
     dark:bg-zinc-800"
     >
       <p>Please login to submit a video</p>
-      <button
-        className="button mt-4"
-        type="button"
-        onClick={() => loginWithRedirect()}
-      >
-        Login
-      </button>
+      <Link href="/api/auth/login">
+        <button
+          className="button mt-4"
+          type="button"
+        >
+          Login
+        </button>
+      </Link>
     </div>
   )
 }

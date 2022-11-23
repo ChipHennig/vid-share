@@ -1,7 +1,8 @@
 export default function List({
+    isUser,
     data = [],
 }) {
-    return (
+    return isUser ? (
         <>
             <div>
                 {data.map((item, index) => (
@@ -9,7 +10,7 @@ export default function List({
                         <iframe
                             width="560"
                             height="315"
-                            src={item.url}
+                            src={item}
                             title="YouTube video player"
                             frameBorder="0"
                             allow="accelerometer; autoplay; 
@@ -21,5 +22,9 @@ export default function List({
                 ))}
             </div>
         </>
+    ) : (
+        <div>
+            User has no videos... they may not be a user
+        </div>
     )
 }

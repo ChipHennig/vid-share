@@ -1,8 +1,7 @@
-import { useAuth0 } from '@auth0/auth0-react'
+import { useUser } from "@auth0/nextjs-auth0"
 
 export default function ViewerButton({ onViewershipChange, isViewer }) {
-    const { user, isLoading, isAuthenticated, loginWithRedirect, logout } =
-        useAuth0()
+    const { user, error, isLoading } = useUser();
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -10,17 +9,18 @@ export default function ViewerButton({ onViewershipChange, isViewer }) {
     }
 
     if (isLoading) return null
+    if (error) return <div>{error.message}</div>
 
     const viewButtonText = isViewer ? "You're a viewer" : "Become a viewer"
 
-    return isAuthenticated ? (
+    return user ? (
         <form className="flex items-center space-x-4" onSubmit={onSubmit}>
             <img src={user.picture} alt={user.name} width={40} className="rounded" />
             <button
                 className="form-input"
             >{viewButtonText}</button>
-            {isAuthenticated && (
-                <button className="button" type="button" onClick={() => logout()}>
+            {user && (
+                <button className="button" type="button" href="/api/auth/logout">
                     Logout
                 </button>
             )}
@@ -34,7 +34,7 @@ export default function ViewerButton({ onViewershipChange, isViewer }) {
             <button
                 className="button mt-4"
                 type="button"
-                onClick={() => loginWithRedirect()}
+                href="/api/auth/login"
             >
                 Login
             </button>
