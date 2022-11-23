@@ -2,12 +2,11 @@ import '../styles/globals.css'
 
 import { SWRConfig } from 'swr'
 import { UserProvider } from '@auth0/nextjs-auth0'
-import { ThemeProvider } from 'next-themes'
 import Header from '../components/Header'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider attribute="class">
+    <>
       <UserProvider>
         <SWRConfig
           value={{
@@ -20,8 +19,7 @@ function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
         </SWRConfig>
       </UserProvider>
-    </ThemeProvider>
-
+    </>
   )
 }
 

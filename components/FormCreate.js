@@ -19,7 +19,7 @@ export default function FormCreate({ onSubmitNewVideo, inputNewVideo }) {
         className="form-input"
         type="text"
         ref={inputNewVideo}
-        placeholder="Enter a video embed url"
+        placeholder="Enter a YouTube link"
       />
       {user && (
         <Link href="/api/auth/logout">
